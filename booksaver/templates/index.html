@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block hero %}
+
+<ul class="breadcrumb">
+        <li><a href="#">Home</a> <span class="divider">/</span></li>
+        <li><a href="#">Library</a> <span class="divider">/</span></li>
+        <li class="active">Book</li>
+</ul>
+
+{% if is_paginated %}
+  <nav class="paginator" style="text-align:center">
+    <div class="pagination">
+        <ul>
+            {% if page_obj.has_previous %}
+                <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+            {% endif %}
+
+            <li class="active">
+                <a>{{ page_obj.number }} of {{ paginator.num_pages }}</a>
+            </li>
+
+            {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+            {% endif %}
+        </ul>
+    </div>
+  </nav>
+{% endif %}
+
+
+{% endblock %}
+
+{% block rows %}
+          {% load endless %}
+
+          {% paginate 12 object_list %}
+
+          {% for book in object_list %} {# |slice:":12" #}
+
+            {% if forloop.first %}
+              <div class="row-fluid">
+            {% endif %}
+
+            {% if forloop.counter0|divisibleby:3 %}
+              </div><!--/row-->
+              <div class="row-fluid">
+            {% endif %}
+
+            <div class="span4">
+              <a href="/book/{{ book.pk }}" title='{{ book.title }}'><h3>{{ book.title }}</h3></a>
+              <ul class="book-details">
+               <li class="last"><a href="http://avaxhome.ws/{{ book.path }}">Updated</a>: <span>{{ book.date|date:'Y-m-d' }}</span></li>
+               {% if book.isbn %}<li>ISBN: <span>{{ book.isbn }}</span></li>{% endif %}
+               {% if book.pubdate %}<li>Year: <span>{{ book.pubdate|date:'Y' }}</span></li>{% endif %}
+               {% if book.lang %}<li>Language: <span>{{ book.lang }}</span></li>{% endif %}
+               {% if book.media_formats %}<li>Format: <span>{{ book.media_formats }}</span></li>{% endif %}
+              </ul>
+              <div class="image" style="text-align:center;margin-bottom:10px;overflow:hidden;height:300px;vertical-align:middle;">
+                <img src="http://{{ book.image }}" /> {# <a class="btn" href="book/{{ book.pk }}">View details &raquo;</a> #}
+              </div>
+              <p style="text-align:justify">{{ book.short_description }} <a class="btn btn-mini" href="/book/{{ book.pk }}">more details &raquo;</a></p>
+            </div><!--/span-->
+
+            {% if forloop.last %}</div><!--/row (last)-->{% endif %}
+          {% endfor %}
+          {% show_pages %}
+
+{% if is_paginated %}
+  <nav class="paginator" style="text-align:center">
+    <div class="pagination">
+        <ul>
+            {% if page_obj.has_previous %}
+                <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+            {% endif %}
+
+            <li class="active">
+                <a>{{ page_obj.number }} of {{ paginator.num_pages }}</a>
+            </li>
+
+            {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+            {% endif %}
+        </ul>
+    </div>
+  </nav>
+{% endif %}
+
+
+{% endblock %}

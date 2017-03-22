@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row-fluid">
+   <div class="span9">
+    <h2>{{ object.title }}</h2>
+    <ul class="book-details">
+               <li class="last"><a href="http://avaxhome.ws/{{ book.path }}">Updated</a>: <span>{{ book.date|date:'Y-m-d' }}</span></li>
+               {% if book.isbn %}<li>ISBN: <span>{{ book.isbn }}</span></li>{% endif %}
+               {% if book.pubdate %}<li>Year: <span>{{ book.pubdate|date:'Y' }}</span></li>{% endif %}
+               {% if book.lang %}<li>Language: <span>{{ book.lang }}</span></li>{% endif %}
+               {% if book.media_formats %}<li>Format: <span>{{ book.media_formats }}</span></li>{% endif %}
+    </ul>
+
+    <div class="image" style="text-align:center;margin-bottom:10px;overflow:hidden">
+      <img src="http://{{ book.image }}" /> {# <a class="btn" href="book/{{ book.pk }}">View details &raquo;</a> #}
+      <div>{{ book.bookinfo }}</div>
+    </div>
+    <p style="text-align:justify">{{ book.description|safe|linebreaks }}</p>
+    <a class="btn" href="#">more details &raquo;</a>
+
+  </div>
+
+   <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Links</li>
+              {% for link in object.link_set.all %}
+              <li><a href="http://{{ link.url }}">{{ link.domain }}</a></li>
+              {% endfor %}
+              <!--<li class="nav-header">Sidebar</li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>-->
+            </ul>
+          </div><!--/.well -->
+   </div><!--/span-->
+  </div>
+{% endblock %}

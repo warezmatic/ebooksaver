@@ -1,0 +1,36 @@
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+
+.sidebar-nav {
+  padding: 9px 0;
+}
+
+ul.book-details {
+  margin: 0 0 0.2em;
+  padding: 0;
+  font-size: 81%;
+}
+ul.book-details li {
+  display: inline;
+  border-left: 1px solid #666;
+  padding-left: 0.2em;
+}
+
+
+ul.book-details li:first-child {
+  border-left: medium none;
+  margin-left: 0;
+}
+
+
+ul.book-details li span {
+  font-weight:bold;
+}
+
+h3 {
+  white-space:nowrap;
+  overflow:hidden;
+  /*text-align:center*/
+}
